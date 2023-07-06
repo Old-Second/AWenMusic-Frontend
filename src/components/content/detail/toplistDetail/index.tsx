@@ -14,13 +14,14 @@ import SimiToplist from './childCpn/simiToplist';
 interface IDetail extends IToplist {
   songs: ISong[];
 }
+
 const ToplistDetail: FC<RouteComponentProps<any, any, { id: string; name: string; userId: string }>> = (
   props
 ): ReactElement => {
   const { id, name } = props.location.state;
   const [detail, setDetail] = useState<IDetail>();
   const [tid, setTId] = useState<string>(id);
-  const [tName,setTname]=useState<string>(name);
+  const [tName, setTname] = useState<string>(name);
   useEffect(() => {
     getToplistDetail(tid).then((data: any) => {
       setDetail(data);
@@ -36,9 +37,9 @@ const ToplistDetail: FC<RouteComponentProps<any, any, { id: string; name: string
       }
     });
   };
-  const toplistClick = (id: string,name:string) => {
+  const toplistClick = (id: string, name: string) => {
     setTId(id);
-    setTname(name)
+    setTname(name);
   };
   return (
     <ToplistDetailWrapper>
@@ -93,7 +94,7 @@ const ToplistDetail: FC<RouteComponentProps<any, any, { id: string; name: string
           </LeftContent>
         )}
         <RightContent>
-          <SimiToplist id={tid} onClick={(id,name) => toplistClick(id,name)} />
+          <SimiToplist id={tid} onClick={(id, name) => toplistClick(id, name)} />
         </RightContent>
       </CenterContentWrapper>
     </ToplistDetailWrapper>

@@ -2,7 +2,6 @@ import React, { memo, FC } from 'react';
 import { Map } from 'immutable';
 import { ListItemWrapper } from './style';
 import { formatTime } from '../../../../../utils/format';
-import VipMv from '../../../../common/vip-mv';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { cancelFavorite, setUserFavorite } from '../../../../../network/user';
 import { changeUserDetailAction } from '../../../../../views/Login/store/actionCreators';
@@ -19,12 +18,11 @@ interface IProps extends RouteComponentProps {
   time: string;
   operator?: string;
   play: (id: string, name: string) => void;
-  vip?: number;
-  video?: { id: string; name: string };
   arId: string;
 }
+
 const ListItem: FC<IProps> = (props) => {
-  const { index, id, name, createName, alName, time, play, vip, video, arId } = props;
+  const { index, id, name, createName, alName, time, play, arId } = props;
   const { userDetail } = useSelector<Map<string, ILogin>, { userDetail: IUserDetail }>((state) => ({
     userDetail: state.getIn(['loginReducer', 'login', 'userDetail'])
   }));
@@ -47,16 +45,6 @@ const ListItem: FC<IProps> = (props) => {
     } else {
       cancelFavorite(id).then((data) => {
         dispatch(changeUserDetailAction());
-      });
-    }
-  };
-  const videoRouter = () => {
-    if (video) {
-      props.history.push({
-        pathname: '/Home/videoDetail',
-        state: {
-          id: video.id
-        }
       });
     }
   };
@@ -88,11 +76,6 @@ const ListItem: FC<IProps> = (props) => {
       </div>
       <div className="name" onClick={(e) => playClick(id, name)}>
         <span className="text-nowrap">{name}</span>
-        <VipMv
-          isShowVip={vip !== undefined && vip === 1}
-          isShowMv={video !== undefined && video !== null}
-          onClick={() => videoRouter()}
-        />
       </div>
       <div className="create-name" onClick={(e) => artistRouter()}>
         {createName}

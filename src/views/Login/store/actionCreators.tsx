@@ -1,8 +1,7 @@
 import { message } from 'antd';
 import { login } from '../../../network/login';
 import { RouteComponentProps } from 'react-router-dom';
-import { getUserDetail, updateUserExpire } from '../../../network/user';
-import { changeShow } from '../../../components/common/toast/store/actionCreators';
+import { getUserDetail } from '../../../network/user';
 import { ILoginUserAction } from './type';
 import { IUserDetail, IUserMsg } from '../../../constant/store/login';
 
@@ -63,13 +62,6 @@ export function loginAction(userName: string, password: string, props: RouteComp
     try {
       const data: any = await login(userName, password);
       if (data) {
-        const { token } = data;
-        // const res: any = await updateUserExpire(token);
-        // if (res.code * 1 === 200) {
-        //   dispatch(changeShow('您的VIP已经过期，开通VIP后畅想', 3500));
-        //   data.auth = 0;
-        //   delete data.vip;
-        // }
         await dispatch(changeUserMsg(data));
         await dispatch(changeLoginType(1));
         window.localStorage.setItem('userMsg', JSON.stringify(data));

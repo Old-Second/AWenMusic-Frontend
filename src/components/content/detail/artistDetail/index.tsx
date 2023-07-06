@@ -19,7 +19,6 @@ import { IAlbum } from '../../../../constant/album';
 import { ISong } from '../../../../constant/albumDetail';
 
 import TabControl from '../../../common/tabControl';
-import MV from './childCpn/mv/index';
 import Albums from './childCpn/albums';
 
 import { changeUserDetailAction } from '../../../../views/Login/store/actionCreators';
@@ -111,7 +110,6 @@ const ArtistDetail: FC<RouteComponentProps<any, any, { id: string }>> = memo((pr
                 list={['专辑', '歌手详情', '相似歌手']}
                 contentName={['album', 'artistDesc', 'similar']}
                 album={<Albums albums={artistDetail.album} />}
-                // mv={<MV id={artistDetail.id} />}
                 artistDesc={<Desc desc={artistDetail.description} />}
                 similar={<Similar area={artistDetail.area} onClick={(id: string) => simiClick(id)} />}
               />

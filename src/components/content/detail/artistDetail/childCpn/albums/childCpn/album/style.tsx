@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import coverall from '../../../../../../../../assets/img/coverall.png';
+
 export const AlbumWrapper = styled.div`
   display: flex;
   align-items: flex-start;

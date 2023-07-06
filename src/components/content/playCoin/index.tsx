@@ -15,10 +15,10 @@ import {
 import Playlist from './childCpn/playlist';
 import { CSSTransition } from 'react-transition-group';
 import { getFileBlob } from '../../../network/media';
-import { ILogin, IUserMsg } from '../../../constant/store/login';
 import { ISongStore } from '../../../constant/store/song';
 
 interface IProps extends RouteComponentProps {}
+
 const PlayCoin: FC<IProps> = (props): ReactElement => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -27,9 +27,6 @@ const PlayCoin: FC<IProps> = (props): ReactElement => {
   const [isShowCurLyric, setIsShowLyric] = useState<boolean>(false);
   //redux-hook
   const dispatch = useDispatch();
-  const { userMsg } = useSelector<Map<string, ILogin>, { userMsg: IUserMsg }>((state) => ({
-    userMsg: state.getIn(['loginReducer', 'login', 'userMsg'])
-  }));
   const { song } = useSelector<Map<string, ISongStore>, { song: ISongStore }>((state) => ({
     song: state.getIn(['songReducer', 'song'])
   }));
@@ -55,11 +52,6 @@ const PlayCoin: FC<IProps> = (props): ReactElement => {
     if (!isDrag) {
       setCurrentTime(e.target.currentTime * 1000);
       if (e.target.currentTime * 1000 > song.songDetail.duration * 0.2) {
-        if (userMsg.auth * 1 === 0 && song.songDetail.vip === 1) {
-          if (audioRef.current) {
-            audioRef.current.currentTime = 0;
-          }
-        }
       }
     }
     if (song.lyric && Array.isArray(song.lyric) && song.lyric.length !== 0) {
@@ -142,16 +134,12 @@ const PlayCoin: FC<IProps> = (props): ReactElement => {
       <CenterContent>
         <div className="msg">
           <div className="img-container" onClick={(e) => playCoin()}>
-            <img
-              src={song.songDetail.album ? song.songDetail.album.coverUrl : song.songDetail.channel.coverUrl}
-              alt=""
-            />
-            <div className="mask"> </div>
+            <img src={song.songDetail.album ? song.songDetail.album.coverUrl : ''} alt="" />
+            <div className="mask"></div>
           </div>
           <div className="right-msg">
             <div className="song-name-outer">
               <p className="song-name text-nowrap">{song.songDetail.name}</p>
-              {song.songDetail.vip === 1 && <p className="vip">VIP</p>}
             </div>
             <p className="artist-name text-nowrap">
               {song.songDetail.artist ? song.songDetail.artist.name : song.songDetail.user.userName}

@@ -4,11 +4,8 @@ import { ISearchAction } from './type';
 
 const defaultState = Map<ISearchStore>({
   searchResult: {
-    user: [],
-    playlist: [],
     album: [],
     artist: [],
-    video: [],
     song: []
   }
 });

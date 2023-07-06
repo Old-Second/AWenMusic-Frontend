@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const SongListItemWrapper = styled.div`
   display: flex;
   align-items: center;

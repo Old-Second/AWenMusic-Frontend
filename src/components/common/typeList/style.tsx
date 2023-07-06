@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const TypeListWrapper = styled.div`
   .types {
     display: flex;

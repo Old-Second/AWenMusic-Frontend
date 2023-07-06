@@ -15,6 +15,7 @@ interface IProps {
   isShowBtn: boolean;
   isShowPublish: boolean;
 }
+
 const Reply: FC<IProps> = (props): ReactElement => {
   const { onClick, thumbClick, isShowBtn, isShowPublish, showCommentClick, id, userId, delComment, cancelThumb } =
     props;
@@ -49,7 +50,6 @@ const Reply: FC<IProps> = (props): ReactElement => {
   const isThumb = (): boolean => {
     let momentFlag = -1;
     let commentFlag = -1;
-    let videoFlag = -1;
     if (userDetail.thumb && userDetail.thumb.moment) {
       momentFlag = userDetail.thumb.moment.findIndex((item: string, index: number) => {
         return id === item;
@@ -60,12 +60,7 @@ const Reply: FC<IProps> = (props): ReactElement => {
         return id === item;
       });
     }
-    if (userDetail.thumb && userDetail.thumb.video) {
-      videoFlag = userDetail.thumb.video.findIndex((item: string, index: number) => {
-        return id === item;
-      });
-    }
-    return momentFlag !== -1 || commentFlag !== -1 || videoFlag !== -1;
+    return momentFlag !== -1 || commentFlag !== -1;
   };
   const deleteCom = () => {
     if (delComment) {

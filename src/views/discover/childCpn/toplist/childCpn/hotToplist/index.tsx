@@ -6,10 +6,10 @@ import { IToplist } from '../../../../../../constant/toplist';
 import { ISong } from '../../../../../../constant/song';
 import { changeSongDetailAction } from '../../../../../../components/content/playCoin/store/actionCreators';
 import { useDispatch } from 'react-redux';
-import VipMv from '../../../../../../components/common/vip-mv';
 import { IArtist } from '../../../../../../constant/artist';
 import { Image, Skeleton } from 'antd';
 import placeholder from '../../../../../../assets/img/holder/placeholder.png';
+
 interface IDetail extends IToplist {
   songs: ISong[];
 }
@@ -44,14 +44,6 @@ const HotToplist: FC<RouteComponentProps> = (props): ReactElement => {
   };
   const playSong = (item: ISong) => {
     dispatch(changeSongDetailAction(item.id));
-  };
-  const videoRouter = (item: { id: string; name: string }) => {
-    props.history.push({
-      pathname: '/Home/videoDetail',
-      state: {
-        id: item.id
-      }
-    });
   };
   const artistRouter = (item: IArtist) => {
     if (item) {
@@ -107,11 +99,6 @@ const HotToplist: FC<RouteComponentProps> = (props): ReactElement => {
                               <div className="song-name text-nowrap" title={it.name}>
                                 {it.name}
                               </div>
-                              <VipMv
-                                isShowVip={it.vip === 1}
-                                isShowMv={it.video}
-                                onClick={() => videoRouter(it.video)}
-                              />
                             </div>
                           </div>
                           <div className="artist-name" onClick={(e) => artistRouter(it.artist)}>

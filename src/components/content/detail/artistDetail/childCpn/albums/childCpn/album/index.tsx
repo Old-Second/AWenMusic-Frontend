@@ -4,23 +4,24 @@ import { AlbumWrapper } from './style';
 import { IAlbum } from '../../../../../../../../constant/album';
 import { ISong } from '../../../../../../../../constant/albumDetail';
 import { formatTime } from '../../../../../../../../utils/format';
-import VipMv from '../../../../../../../common/vip-mv';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { cancelFavorite, setUserFavorite } from '../../../../../../../../network/user';
 import { changeUserDetailAction } from '../../../../../../../../views/Login/store/actionCreators';
 import { changeShow } from '../../../../../../../common/toast/store/actionCreators';
 import { ILogin, IUserDetail } from '../../../../../../../../constant/store/login';
-import {Image} from "antd";
-import placeholder from "../../../../../../../../assets/img/holder/placeholder.png";
+import { Image } from 'antd';
+import placeholder from '../../../../../../../../assets/img/holder/placeholder.png';
 
 interface IAlbumItem extends IAlbum {
   songs: ISong[];
 }
+
 interface IProps extends RouteComponentProps {
   album: IAlbumItem;
   play: (item: ISong, index: number) => void;
 }
+
 const Album: FC<IProps> = (props): ReactElement => {
   const { album, play } = props;
   const { userDetail } = useSelector<Map<string, ILogin>, { userDetail: IUserDetail }>((state) => ({
@@ -48,16 +49,6 @@ const Album: FC<IProps> = (props): ReactElement => {
       });
     }
   };
-  const videoRouter = (item: ISong) => {
-    if (item.video) {
-      props.history.push({
-        pathname: '/Home/videoDetail',
-        state: {
-          id: item.video.id
-        }
-      });
-    }
-  };
   const albumRouter = () => {
     if (album) {
       props.history.push({
@@ -79,7 +70,7 @@ const Album: FC<IProps> = (props): ReactElement => {
           preview={false}
           placeholder={<Image preview={false} src={placeholder} width={148} height={148} />}
         />
-        <div className="mask"> </div>
+        <div className="mask"></div>
       </div>
       <ul className="song-list">
         <div className="album-name">{album.name}</div>
@@ -104,11 +95,6 @@ const Album: FC<IProps> = (props): ReactElement => {
                 </div>
                 <div className="song-name text-nowrap" onClick={(e) => playSong(item, index)}>
                   <span className="text-nowrap">{item.name}</span>
-                  <VipMv
-                    isShowVip={item.vip === 1}
-                    isShowMv={item.video !== undefined && item.video !== null}
-                    onClick={() => videoRouter(item)}
-                  />
                 </div>
                 <div className="dt">{formatTime(item.dt!, 'mm:ss')}</div>
               </li>

@@ -1,19 +1,19 @@
 import React, { memo, FC, ReactElement, useEffect, useState, useRef, MouseEvent } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { getRecArtist } from '../../../../../../network/artist';
-import {Carousel, Empty, Image} from 'antd';
+import { Carousel, Empty, Image } from 'antd';
 import MsgItem from '../../../../../../components/content/msgItem';
 import { RecArtistWrapper } from './style';
 
 import { IArtist } from '../../../../../../constant/artist';
 import { CarouselRef } from 'antd/lib/carousel';
 import placeholder from '../../../../../../assets/img/holder/user-placehoder.png';
+
 const RecArtist: FC<RouteComponentProps> = (props): ReactElement => {
   const [recArtist, setArtist] = useState<IArtist[] | []>([]);
   const carouselRef = useRef<CarouselRef>(null);
   useEffect(() => {
     getRecArtist<IArtist[]>(0, 12).then((data) => {
-      //console.log(data);
       setArtist(data);
     });
   }, []);
@@ -66,11 +66,11 @@ const RecArtist: FC<RouteComponentProps> = (props): ReactElement => {
                     </li>
                   );
                 })}
-              {
-                recArtist && recArtist.length==0 &&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={"暂无热门歌手"}/>
-              }
+              {/* eslint-disable-next-line eqeqeq */}
+              {recArtist && recArtist.length == 0 && (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={'暂无热门歌手'} />
+              )}
             </ul>
-
           );
         })}
       </Carousel>

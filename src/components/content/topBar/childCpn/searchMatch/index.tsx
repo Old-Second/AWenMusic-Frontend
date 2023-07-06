@@ -14,6 +14,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 interface IProps extends RouteComponentProps {
   keyword: string;
 }
+
 const SearchMatch: FC<IProps> = (props): ReactElement => {
   const { keyword } = props;
   const [song, setSong] = useState<ISong[]>([]);
@@ -96,12 +97,6 @@ const SearchMatch: FC<IProps> = (props): ReactElement => {
             );
           })}
       </ul>
-      {/*{playlist.length !== 0 && (*/}
-      {/*  <div className="search-title">*/}
-      {/*    <i className="iconfont icon-yinle-liebiao"> </i>*/}
-      {/*    歌单*/}
-      {/*  </div>*/}
-      {/*)}*/}
       <ul className="list">
         {playlist.length !== 0 &&
           playlist.slice(0, 4).map((item, index) => {

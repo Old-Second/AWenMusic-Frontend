@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const SearchDetailWrapper = styled.div`
   background-color: #fff;
   display: flex;

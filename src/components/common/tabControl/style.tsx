@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const TabControlWrapper = styled.div`
   .list {
     display: flex;

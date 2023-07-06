@@ -1,38 +1,26 @@
 import React, { memo, FC, ReactElement } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Map } from 'immutable';
+import { useDispatch } from 'react-redux';
 import { changeSongDetailAction } from '../../../../playCoin/store/actionCreators';
 import { ISong } from '../../../../../../constant/song';
 import { SongListWrapper } from './style';
 import SongListItem from '../../../../songListItem';
-import { addPlayCount } from '../../../../../../network/playlist';
-import { changeShow } from '../../../../../common/toast/store/actionCreators';
-import { ILogin, IUserMsg } from '../../../../../../constant/store/login';
-import {addToplistPlayCount} from "../../../../../../network/toplist/toplist";
+import { addToplistPlayCount } from '../../../../../../network/toplist/toplist';
 
 interface IProps {
   songs: Array<ISong>;
   pId?: string;
   isShowUp: boolean;
-  tId?:string
+  tId?: string;
 }
-const SongList: FC<IProps> = ({ songs, pId, isShowUp,tId }): ReactElement => {
-  const { userMsg } = useSelector<Map<string, ILogin>, { userMsg: IUserMsg }>((state) => ({
-    userMsg: state.getIn(['loginReducer', 'login', 'userMsg'])
-  }));
+
+const SongList: FC<IProps> = ({ songs, pId, isShowUp, tId }): ReactElement => {
   const dispatch = useDispatch();
   const playSong = (item: ISong, id: string): void => {
     dispatch(changeSongDetailAction(id));
-    const { vip } = item;
-    const { auth } = userMsg;
-    if (vip === 1 && auth * 1 === 0) {
-      dispatch(changeShow('您正在试听VIP歌曲，开通VIP后畅想', 3000));
-    }
-    if (pId) {
-      addPlayCount(pId).then(()=>{}).catch(()=>{})
-    }
-    if(tId){
-      addToplistPlayCount(tId).then(()=>{}).catch(()=>{});
+    if (tId) {
+      addToplistPlayCount(tId)
+        .then(() => {})
+        .catch(() => {});
     }
   };
   return (
@@ -53,8 +41,6 @@ const SongList: FC<IProps> = ({ songs, pId, isShowUp,tId }): ReactElement => {
                   arId={item.artist?.id}
                   time={item.publishTime}
                   dt={item.duration!}
-                  vip={item.vip}
-                  video={item.video}
                   isShowUp={isShowUp}
                   diff={item.diff}
                   onClick={(id: string) => playSong(item, id)}

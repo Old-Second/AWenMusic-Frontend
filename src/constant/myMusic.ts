@@ -1,4 +1,5 @@
 import { navListType } from './NavList';
+
 const myMusic: navListType[] = [
   {
     path: '/Home/myMusic/myFavorite',
@@ -6,12 +7,6 @@ const myMusic: navListType[] = [
     tag: 1,
     icon: 'iconfont icon-love'
   },
-  // {
-  //   path: '/Home/myMusic/myPlaylist',
-  //   name: '我的歌单',
-  //   tag:1,
-  //   icon:"iconfont icon-Music-Playlist"
-  // },
   {
     path: '/Home/myMusic/mySubscribe',
     name: '我的收藏',

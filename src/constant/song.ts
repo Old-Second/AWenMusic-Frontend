@@ -8,10 +8,9 @@ interface ISong {
   alia?: string;
   album: IAlbum;
   artist: IArtist;
-  video?: any;
-  vip: number;
   playCount?: number;
   duration?: number;
   diff?: number;
 }
+
 export type { ISong };

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import singlecover from '../../../assets/img/singlecover.png';
+
 export const PlayPageWrapper = styled.div`
   background-color: #fff;
   .play {

@@ -21,7 +21,7 @@ const Banner: FC<RouteComponentProps> = (props): ReactElement => {
   }, []);
   const bannerRef = useRef<CarouselRef>(null);
   const change = (from: number, to: number): void => {
-    if(banner && banner[to]){
+    if (banner && banner[to]) {
       setPicUrl(banner[to].picUrl);
     }
   };
@@ -35,14 +35,6 @@ const Banner: FC<RouteComponentProps> = (props): ReactElement => {
     switch (item.type) {
       case 1:
         dispatch(changeSongDetailAction(item.songId!));
-        break;
-      case 3:
-        props.history.push({
-          pathname: '/Home/videoDetail',
-          state: {
-            id: item.vId
-          }
-        });
         break;
       case 2:
         props.history.push({
@@ -58,7 +50,7 @@ const Banner: FC<RouteComponentProps> = (props): ReactElement => {
   };
   return (
     <BannerWrapper bgc={picUrl}>
-      <div className="bgc"> </div>
+      <div className="bgc"></div>
       <div className="banner-outer">
         <div className="prev" onClick={(e) => prevClick()}>
           <i className="iconfont icon-arrow-right"> </i>

@@ -1,7 +1,6 @@
 import React, { memo, FC, ReactElement, useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Map } from 'immutable';
+import { useDispatch } from 'react-redux';
 import { Empty, Pagination } from 'antd';
 import { getUserFavorite } from '../../../../network/user';
 import { MyFavoriteWrapper } from './style';
@@ -10,21 +9,15 @@ import { formatTime } from '../../../../utils/format';
 
 import { changeSongDetailAction } from '../../../../components/content/playCoin/store/actionCreators';
 
-import VipMv from '../../../../components/common/vip-mv';
-import { changeShow } from '../../../../components/common/toast/store/actionCreators';
-import { ILogin, IUserMsg } from '../../../../constant/store/login';
-
 interface IUserSong {
   createTime: string;
   song: ISong;
 }
+
 const MyFavorite: FC<RouteComponentProps> = (props): ReactElement => {
   const [songs, setSongs] = useState<IUserSong[]>([]);
   const [count, setCount] = useState<number>(0);
   const dispatch = useDispatch();
-  const { userMsg } = useSelector<Map<string, ILogin>, { userMsg: IUserMsg }>((state) => ({
-    userMsg: state.getIn(['loginReducer', 'login', 'userMsg'])
-  }));
   useEffect(() => {
     getUserFavorite(0, 10).then((data: any) => {
       setSongs(data.songList.songs);
@@ -33,11 +26,6 @@ const MyFavorite: FC<RouteComponentProps> = (props): ReactElement => {
   }, []);
   //播放歌曲
   const playSong = (item: IUserSong) => {
-    const { vip } = item.song;
-    const { auth } = userMsg;
-    if (vip === 1 && auth * 1 === 0) {
-      dispatch(changeShow('您正在试听VIP歌曲，开通VIP后畅想', 3000));
-    }
     dispatch(changeSongDetailAction(item.song.id));
   };
   const albumRouter = (item: IUserSong) => {
@@ -55,16 +43,6 @@ const MyFavorite: FC<RouteComponentProps> = (props): ReactElement => {
         id: item.song.artist.id
       }
     });
-  };
-  const videoRouter = (item: IUserSong) => {
-    if (item.song.video) {
-      props.history.push({
-        pathname: '/Home/videoDetail',
-        state: {
-          id: item.song.video.id
-        }
-      });
-    }
   };
   const changePage = (val: number) => {
     getUserFavorite((val - 1) * 10, 10).then((data: any) => {
@@ -91,7 +69,6 @@ const MyFavorite: FC<RouteComponentProps> = (props): ReactElement => {
                   <span className="text-nowrap" title={item.song.name}>
                     {item.song.name}
                   </span>
-                  <VipMv isShowVip={item.song.vip === 1} isShowMv={item.song.video} onClick={() => videoRouter(item)} />
                 </div>
                 <div className="album-name text-nowrap" onClick={(e) => albumRouter(item)}>
                   {item.song.album.name}

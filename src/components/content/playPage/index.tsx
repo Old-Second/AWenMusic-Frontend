@@ -5,37 +5,25 @@ import { Map } from 'immutable';
 
 import { PlayPageWrapper, CenterContent } from './style';
 
-import { addSongToPlay, getUserPlaylist } from '../../../network/playlist';
 import { cancelFavorite, setUserFavorite } from '../../../network/user';
 import { getAllComment, publishComment } from '../../../network/comment';
 import { downloadSong } from '../../../network/song';
 
-import { formatTime } from '../../../utils/format';
-
 import Reply from '../../common/reply';
 import Comment from '../../common/comment';
-import IncludePlaylist from './childCpn/includePlaylist';
-import ListInfo from '../listInfo';
 
 import { changeUserDetailAction } from '../../../views/Login/store/actionCreators';
-import { changeIsShowAction } from '../vip/store/actionCreators';
 
-import { ILogin, IUserDetail, IUserMsg } from '../../../constant/store/login';
+import { ILogin, IUserDetail } from '../../../constant/store/login';
 import { IComment } from '../../../constant/comment';
-import { IPlaylist } from '../../../constant/playlist';
 import { ISongStore } from '../../../constant/store/song';
 
 const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
-  const [userAlbum, setAlbum] = useState<IPlaylist[]>([]);
-  const [isShow, setIsShow] = useState<boolean>(false);
   const [comment, setComment] = useState<IComment[]>([]);
   const [total, setTotal] = useState<number>(0);
   const { songDetail, lyric, currentLyricIndex } = useSelector<Map<string, ISongStore>, ISongStore>((state) => {
     return state.getIn(['songReducer', 'song']);
   });
-  const { userMsg } = useSelector<Map<string, ILogin>, { userMsg: IUserMsg }>((state) => ({
-    userMsg: state.getIn(['loginReducer', 'login', 'userMsg'])
-  }));
   const { userDetail } = useSelector<Map<string, ILogin>, { userDetail: IUserDetail }>((state) => ({
     userDetail: state.getIn(['loginReducer', 'login', 'userDetail'])
   }));
@@ -43,11 +31,6 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
     return state.getIn(['playModeTypeReducer', 'playType']);
   });
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   getUserPlaylist(userMsg.userId).then((data: any) => {
-  //     setAlbum(data.playlist);
-  //   });
-  // }, [userMsg.userId]);
   //获取所有评论
   useEffect(() => {
     let id = 'songId';
@@ -68,13 +51,6 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
           id: songDetail.album.id
         }
       });
-    } else if (playType === 1) {
-      props.history.push({
-        pathname: '/Home/channelDetail',
-        state: {
-          id: songDetail.channel.id
-        }
-      });
     }
   };
   const artistRouter = () => {
@@ -93,16 +69,6 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
         }
       });
     }
-  };
-  //收藏歌曲
-  const subSong = () => {
-    setIsShow(!isShow);
-  };
-  //为歌单添加歌曲
-  const addSong = (item: IPlaylist, index: number) => {
-    addSongToPlay(item.id, songDetail.id).then((data) => {
-      setIsShow(false);
-    });
   };
   //用户喜欢歌曲
   const loveClick = () => {
@@ -156,25 +122,8 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
     });
     return index !== -1;
   };
-  const payClick = () => {
-    dispatch(changeIsShowAction(true));
-  };
-  const videoRouter = () => {
-    if (songDetail && songDetail.video) {
-      props.history.push({
-        pathname: '/Home/videoDetail',
-        state: {
-          id: songDetail.video.id
-        }
-      });
-    }
-  };
   const download = () => {
-    // if (userMsg && userMsg.auth === 0) {
-    //   payClick();
-    // } else {
     downloadSong(songDetail.id, songDetail.name);
-    // }
   };
   return (
     <PlayPageWrapper>
@@ -182,7 +131,7 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
         <div className="play">
           <div className="play-album">
             <div className="rotate-album">
-              <img src={songDetail.album ? songDetail.album.coverUrl : songDetail.channel.coverUrl} alt="cover" />
+              <img src={songDetail.album ? songDetail.album.coverUrl : ''} alt="cover" />
             </div>
             <div className="control-btn">
               <ul>
@@ -194,64 +143,18 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
                     </i>
                   )}
                 </li>
-                {/*<li title="收藏" onClick={(e) => subSong()}>*/}
-                {/*  <i className="iconfont icon-xinjianshoucangjia"> </i>*/}
-                {/*</li>*/}
                 <li onClick={(e) => download()}>
                   <i className="iconfont icon-download"> </i>
                 </li>
               </ul>
             </div>
           </div>
-          {/*{isShow && (*/}
-          {/*  <div className="user-album">*/}
-          {/*    <div className="exit" onClick={(e) => setIsShow(false)}>*/}
-          {/*      <i className="iconfont icon-jia1"> </i>*/}
-          {/*    </div>*/}
-          {/*    <p>已创建歌单</p>*/}
-          {/*    <div className="create-play-list">*/}
-          {/*      <i className="iconfont icon-jia1"> </i>*/}
-          {/*      <span>新建歌单</span>*/}
-          {/*    </div>*/}
-          {/*    <ul>*/}
-          {/*      {userAlbum.length !== 0 &&*/}
-          {/*        userAlbum.map((item, index) => {*/}
-          {/*          return (*/}
-          {/*            <li key={item.id} onClick={(e) => addSong(item, index)}>*/}
-          {/*              <ListInfo*/}
-          {/*                img={<img src={item.coverUrl} alt="" />}*/}
-          {/*                state={item.name}*/}
-          {/*                creator={formatTime(item.createTime, 'yyyy-MM-dd')}*/}
-          {/*                imgWidth="60px"*/}
-          {/*              />*/}
-          {/*            </li>*/}
-          {/*          );*/}
-          {/*        })}*/}
-          {/*    </ul>*/}
-          {/*  </div>*/}
-          {/*)}*/}
           <div className="song-msg">
-            <div className="song-name">
-              {songDetail.name}
-              {/*<div className="tag">*/}
-              {/*  {songDetail && songDetail.vip === 1 && (*/}
-              {/*    <span className="vip" onClick={(e) => payClick()}>*/}
-              {/*      VIP*/}
-              {/*    </span>*/}
-              {/*  )}*/}
-              {/*  {songDetail && songDetail.video && (*/}
-              {/*    <span className="mv" onClick={(e) => videoRouter()}>*/}
-              {/*      MV*/}
-              {/*    </span>*/}
-              {/*  )}*/}
-              {/*</div>*/}
-            </div>
+            <div className="song-name">{songDetail.name}</div>
             <ul>
               <li className="album-name text-nowrap">
                 专辑:
-                <span onClick={(e) => albumRouter()}>
-                  {songDetail.album ? songDetail.album.name : songDetail.channel.name}
-                </span>
+                <span onClick={(e) => albumRouter()}>{songDetail.album ? songDetail.album.name : ''}</span>
               </li>
               <li className="artist-name text-nowrap">
                 歌手:
@@ -284,9 +187,6 @@ const PlayPage: FC<RouteComponentProps> = memo((props): ReactElement => {
             <Reply isShowPublish={true} isShowBtn={false} onClick={(content: string) => publish(content)} />
             <br />
             <Comment comments={comment} onClick={() => reply()} isPage={true} total={total} />
-          </div>
-          <div className="play-right">
-            <IncludePlaylist id={songDetail.id} />
           </div>
         </div>
       </CenterContent>

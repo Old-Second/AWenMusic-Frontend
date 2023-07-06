@@ -3,18 +3,18 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Skeleton, Image, Spin } from 'antd';
 import { ToplistWrapper } from './style';
-import {addToplistPlayCount, getOfficial, getToplistDetail} from '../../../../network/toplist/toplist';
+import { addToplistPlayCount, getOfficial, getToplistDetail } from '../../../../network/toplist/toplist';
 import { IToplist } from '../../../../constant/toplist';
 import { ISong } from '../../../../constant/song';
 import HotToplist from './childCpn/hotToplist';
 import { changeSongDetailAction } from '../../../../components/content/playCoin/store/actionCreators';
 import placeholder from '../../../../assets/img/holder/placeholder.png';
-import VipMv from '../../../../components/common/vip-mv';
 import { IArtist } from '../../../../constant/artist';
 
 interface IDetail extends IToplist {
   songs: ISong[];
 }
+
 const Toplist: FC<RouteComponentProps> = (props): ReactElement => {
   const [official, setOfficial] = useState<IToplist[]>([]);
   const [detail, setDetail] = useState<IDetail[]>([]);
@@ -45,17 +45,11 @@ const Toplist: FC<RouteComponentProps> = (props): ReactElement => {
       }
     });
   };
-  const playSong = (item: IToplist,it:ISong) => {
+  const playSong = (item: IToplist, it: ISong) => {
     dispatch(changeSongDetailAction(it.id));
-    addToplistPlayCount(item.id).then(()=>{}).catch(()=>{})
-  };
-  const videoRouter = (item: { id: string; name: string }) => {
-    props.history.push({
-      pathname: '/Home/videoDetail',
-      state: {
-        id: item.id
-      }
-    });
+    addToplistPlayCount(item.id)
+      .then(() => {})
+      .catch(() => {});
   };
   const artistRouter = (item: IArtist) => {
     if (item) {
@@ -113,18 +107,13 @@ const Toplist: FC<RouteComponentProps> = (props): ReactElement => {
                                 <span>{it.diff}</span>
                               </div>
                             )}
-                            <div className="song-name-vip-mv" onClick={(e) => playSong(item,it)}>
+                            <div className="song-name-vip-mv" onClick={(e) => playSong(item, it)}>
                               <div
                                 className={`song-name text-nowrap ${item.name === '飙升榜' ? 'top' : ''}`}
                                 title={it.name}
                               >
                                 {it.name}
                               </div>
-                              <VipMv
-                                isShowVip={it.vip === 1}
-                                isShowMv={it.video}
-                                onClick={() => videoRouter(it.video)}
-                              />
                             </div>
                           </div>
                           <div className="artist-name" onClick={(e) => artistRouter(it.artist)}>
@@ -145,7 +134,7 @@ const Toplist: FC<RouteComponentProps> = (props): ReactElement => {
           </div>
         )}
       </ul>
-      <HotToplist />
+      {/*<HotToplist />*/}
     </ToplistWrapper>
   );
 };

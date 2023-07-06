@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const SearchMatchWrapper = styled.div`
   position: absolute;
   background-color: #fff;

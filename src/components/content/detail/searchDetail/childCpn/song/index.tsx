@@ -8,7 +8,6 @@ import { formatTime } from '../../../../../../utils/format';
 
 import { changeSongDetailAction } from '../../../../playCoin/store/actionCreators';
 import { Empty } from 'antd';
-import VipMv from '../../../../../common/vip-mv';
 import { ISearchStore } from '../../../../../../constant/store/search';
 
 const Song: FC<RouteComponentProps> = (props): ReactElement => {
@@ -35,14 +34,6 @@ const Song: FC<RouteComponentProps> = (props): ReactElement => {
       }
     });
   };
-  const videoRouter = (item: ISong) => {
-    props.history.push({
-      pathname: '/Home/videoDetail',
-      state: {
-        id: item.video.id
-      }
-    });
-  };
   return (
     <SongWrapper>
       {song &&
@@ -53,7 +44,6 @@ const Song: FC<RouteComponentProps> = (props): ReactElement => {
               <div className="index">{(index + 1).toString().padStart(2, '0')}</div>
               <div className="name text-nowrap" onClick={(e) => songPlay(item, index)}>
                 <span className="text-nowrap">{item.name}</span>
-                <VipMv isShowVip={item.vip === 1} isShowMv={item.video} onClick={() => videoRouter(item)} />
               </div>
               <div className="artist-name" onClick={(e) => artistRouter(item, index)}>
                 {item.artist.name}

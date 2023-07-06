@@ -12,31 +12,36 @@ export function changeSongURL(res: string) {
     songUrl: res
   };
 }
+
 export function changeSongDetail(res: any) {
-  document.title = `${res.name} - ${res.artist ? res.artist.name : res.channel.name} - gb-music`;
+  document.title = `${res.name} - ${res.artist ? res.artist.name : ''} - awen-music`;
   return {
     type: 'changeSongDetail',
     songDetail: res
   };
 }
+
 export function changeLyric(res: any) {
   return {
     type: 'changeLyric',
     lyric: res
   };
 }
+
 export function changeLyricLine(lyric: string) {
   return {
     type: 'changeLyricLine',
     lyricLine: lyric
   };
 }
+
 export function changeCurrentLyricIndex(index: number) {
   return {
     type: 'changeCurrentLyricIndex',
     currentLyricIndex: index
   };
 }
+
 //添加到播放列表
 function changePlaylist(res: ISong[]) {
   return {
@@ -44,6 +49,7 @@ function changePlaylist(res: ISong[]) {
     playlist: res
   };
 }
+
 //播放列表中歌曲索引
 function changeCurrentIndex(res: number) {
   return {
@@ -51,6 +57,7 @@ function changeCurrentIndex(res: number) {
     currentIndex: res
   };
 }
+
 //改变播放模式
 export function changePlayMode(res: number) {
   return {
@@ -58,6 +65,7 @@ export function changePlayMode(res: number) {
     playMode: res
   };
 }
+
 export function changeSongDetailAction(id: string) {
   return (dispatch: any, getState: any) => {
     const { playlist } = getState().getIn(['songReducer', 'song']);
@@ -88,6 +96,7 @@ export function changeSongDetailAction(id: string) {
     }
   };
 }
+
 export function changeCurrentSongAction(tag: number) {
   return (dispatch: any, getState: any) => {
     const { playMode }: ISongStore = getState().getIn(['songReducer', 'song']);
@@ -115,6 +124,7 @@ export function changeCurrentSongAction(tag: number) {
     dispatch(changeSongURLAction(playlist[currentIndex].id));
   };
 }
+
 export function changeSongURLAction(id: string) {
   return (dispatch: any) => {
     getSongURL(id).then((data: any) => {
@@ -124,6 +134,7 @@ export function changeSongURLAction(id: string) {
     });
   };
 }
+
 export function changeSongLyric(id: string) {
   return (dispatch: any) => {
     getLyric(id).then((data: any) => {

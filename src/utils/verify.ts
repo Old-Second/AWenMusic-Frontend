@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 function verifyURL(url: string) {
   const publicKey: string = `-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDVngqLlcT4xs9q18KCEWGaNYIa
@@ -10,9 +11,11 @@ kNSJkagkgGMGph5OywIDAQAB
     algorithms: ['RS256']
   });
   if ((result && result.url) || (result && result.mp3Url)) {
+    console.log(result.url || result.mp3Url);
     return result.url || result.mp3Url;
   } else {
     return '';
   }
 }
+
 export { verifyURL };

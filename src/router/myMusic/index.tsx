@@ -3,7 +3,6 @@ import { Redirect } from 'react-router';
 import { RouteConfig } from 'react-router-config';
 
 const myFavorite = lazy(() => import('../../views/myMusic/childCpn/myFavorite/index'));
-const myPlaylist = lazy(() => import('../../views/myMusic/childCpn/myPlaylist/index'));
 const mySubscribe = lazy(() => import('../../views/myMusic/childCpn/mySubscribe/index'));
 const routes: RouteConfig[] = [
   {
@@ -16,10 +15,6 @@ const routes: RouteConfig[] = [
   {
     path: '/Home/myMusic/myFavorite',
     component: myFavorite
-  },
-  {
-    path: '/Home/myMusic/myPlaylist',
-    component: myPlaylist
   },
   {
     path: '/Home/myMusic/mySubscribe',

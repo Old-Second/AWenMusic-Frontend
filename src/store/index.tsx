@@ -1,9 +1,3 @@
-/*
-@Name guo'bin
-@Description gb-music
-@author guo'bin
-@date 2021/10/12
-*/
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducer';

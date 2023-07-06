@@ -4,24 +4,12 @@ import { CSSTransition } from 'react-transition-group';
 //样式
 import { TopBarWrapper, CenterContent } from './style';
 import logo from '../../../assets/img/logo.png';
-import NavBar from './childCpn/navBar';
 import UserMsg from './childCpn/userMsg';
 import SearchMatch from './childCpn/searchMatch';
-import Message from './childCpn/message';
-import { getAllMsg } from '../../../network/message';
 
 const TopBar: React.FC<RouteComponentProps> = (props) => {
   const [isShow, setIsShow] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>('');
-  const [count, setCount] = useState<number>(10);
-  const [isShowMsg, setIsShowMsg] = useState<boolean>(false);
-  // useEffect(() => {
-  //   getAllMsg().then((data: any) => {
-  //     if (data) {
-  //       setCount(data.count);
-  //     }
-  //   });
-  // }, []);
   const topRef = useRef<HTMLDivElement>(null);
   const homeRouter = () => {
     props.history.push({
@@ -42,7 +30,6 @@ const TopBar: React.FC<RouteComponentProps> = (props) => {
   }, []);
   const changeShowFn = () => {
     setIsShow(false);
-    setIsShowMsg(false);
   };
   useEffect(() => {
     return () => {
@@ -55,15 +42,6 @@ const TopBar: React.FC<RouteComponentProps> = (props) => {
         pathname: '/Home/searchDetail'
       });
     }
-  };
-  const innovateClick = () => {
-    props.history.push({
-      pathname: '/Home/innovation'
-    });
-  };
-  const showMsg = (e: MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    setIsShowMsg(!isShowMsg);
   };
   useEffect(() => {
     window.addEventListener('scroll', pageScroll);
@@ -103,26 +81,9 @@ const TopBar: React.FC<RouteComponentProps> = (props) => {
           </CSSTransition>
         </div>
         <div className="right-content">
-          {/*搜索*/}
-
-          {/*创作者中心*/}
-          {/*<div className="innovation" onClick={(e) => innovateClick()}>*/}
-          {/*  创作者中心*/}
-          {/*</div>*/}
-          {/*用户中心*/}
           <div className="user">
             <UserMsg />
           </div>
-          {/*消息通知*/}
-          {/*<div className="msg">*/}
-          {/*  <i className="iconfont icon-xiaoxi" onClick={(e) => showMsg(e)}>*/}
-          {/*    {' '}*/}
-          {/*  </i>*/}
-          {/*  {count > 0 && <div className="count">{count}</div>}*/}
-          {/*  <CSSTransition in={isShowMsg} timeout={1000} classNames="msg" unmountOnExit={true}>*/}
-          {/*    <Message />*/}
-          {/*  </CSSTransition>*/}
-          {/*</div>*/}
         </div>
       </CenterContent>
     </TopBarWrapper>

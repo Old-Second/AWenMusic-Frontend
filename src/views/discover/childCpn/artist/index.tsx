@@ -55,7 +55,6 @@ const Artist: FC<RouteComponentProps> = (props): ReactElement => {
   useEffect(() => {
     getArtistCate<ICategory[]>().then((data) => {
       setCates(data);
-      //cateClick(data[0],0);
     });
     getArtistType<ICategory[]>().then((data) => {
       setTypes(data);
@@ -148,7 +147,7 @@ const Artist: FC<RouteComponentProps> = (props): ReactElement => {
           })}
         {artists &&
           holder(artists.length, 9).map((item: number) => {
-            return <li key={item}> </li>;
+            return <li key={item}></li>;
           })}
       </ul>
       {count > 40 && (

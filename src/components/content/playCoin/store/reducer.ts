@@ -7,14 +7,11 @@ const defaultState = Map<ISongStore>({
     songUrl: `${HOST_NAME}/song/source?id=`,
     songDetail: {
       id: '',
-      vip: 0,
       album: {
         id: '',
         name: '',
         coverUrl: `${HOST_NAME}/album/cover?id=`
       },
-      channel: {},
-      video: {},
       artist: {
         name: '',
         id: ''

@@ -1,21 +1,15 @@
 import React, { memo, FC, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import RecPlaylist from './childCpn/recPlaylist';
 import RecAlbum from './childCpn/recAlbum';
 import RecArtist from './childCpn/recArtist';
 import RecSong from './childCpn/recSong';
 import Banner from './childCpn/banner';
-import { RecommendWrapper, LeftContent, RightContent } from './style';
-import HotChannel from './childCpn/rightBar/hotChannel';
-import RecVideo from './childCpn/rightBar/recVideo';
+import { RecommendWrapper, LeftContent } from './style';
+
 interface IProps extends RouteComponentProps {}
+
 const Recommend: FC<IProps> = (props): ReactElement => {
-  const playlistRouter = (): void => {
-    props.history.push({
-      pathname: '/Home/discover/playlist'
-    });
-  };
   const albumRouter = (): void => {
     props.history.push({
       pathname: '/Home/discover/album'
@@ -31,11 +25,6 @@ const Recommend: FC<IProps> = (props): ReactElement => {
       <Banner />
       <div className="rec-content">
         <LeftContent>
-          {/*<div className="title-name" onClick={(e) => playlistRouter()}>*/}
-          {/*  热门歌单*/}
-          {/*  <i className="iconfont icon-arrow-right"> </i>*/}
-          {/*</div>*/}
-          {/*<RecPlaylist />*/}
           <div className="title-name" onClick={(e) => albumRouter()}>
             最热专辑
             <i className="iconfont icon-arrow-right"> </i>
@@ -52,10 +41,6 @@ const Recommend: FC<IProps> = (props): ReactElement => {
           </div>
           <RecSong />
         </LeftContent>
-        <RightContent>
-          <HotChannel />
-          <RecVideo />
-        </RightContent>
       </div>
     </RecommendWrapper>
   );

@@ -12,29 +12,6 @@ const navList: navListType[] = [
     tag: 1,
     icon: 'iconfont icon-faxian'
   }
-  // {
-  //   path: '/Home/video',
-  //   name: '视频',
-  //   tag: 1,
-  //   icon: 'iconfont icon-shipin'
-  // },
-  // {
-  //   path: '/Home/channel',
-  //   name: '播客',
-  //   tag: 1,
-  //   icon: 'iconfont icon-ios-radio'
-  // },
-  // {
-  //   path: '/Home/moment',
-  //   name: '动态',
-  //   tag: 1,
-  //   icon: 'iconfont icon-airudiantubiaohuizhi-zhuanqu_zixundongtai'
-  // }
-  /*{
-    path: '/Home/myMusic',
-    name: '我的音乐',
-    tag:0
-  }*/
 ];
 const disCoverList: navListType[] = [
   {
@@ -43,12 +20,6 @@ const disCoverList: navListType[] = [
     tag: 1,
     icon: ''
   },
-  // {
-  //   path: '/Home/discover/playlist',
-  //   name: '歌单',
-  //   tag: 1,
-  //   icon: ''
-  // },
   {
     path: '/Home/discover/toplist',
     name: '排行榜',

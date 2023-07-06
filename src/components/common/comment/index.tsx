@@ -11,9 +11,7 @@ import Reply from '../reply';
 import { deleteComment, replyComment } from '../../../network/comment';
 import { cancelThumb, thumb as thumbComment } from '../../../network/thumbs';
 import { changeUserDetailAction } from '../../../views/Login/store/actionCreators';
-import { changeMsgAction } from '../message/store/actionCreators';
-import { publishMessage } from '../../../network/message';
-import placeholder from "../../../assets/img/holder/user-placehoder.png";
+import placeholder from '../../../assets/img/holder/user-placehoder.png';
 import { IUser } from '../../../constant/user';
 
 interface IProps extends RouteComponentProps {
@@ -23,8 +21,9 @@ interface IProps extends RouteComponentProps {
   onClick: () => void;
   pageClick?: (count: number) => void;
 }
+
 const Comment: FC<IProps> = memo((props): ReactElement => {
-  const { comments, onClick, isPage, total, pageClick } = props;
+  const { comments, onClick, total, pageClick } = props;
   const dispatch = useDispatch();
   const reply = (content: string, item: IComment): void => {
     if (content.trim().length !== 0) {
@@ -35,7 +34,6 @@ const Comment: FC<IProps> = memo((props): ReactElement => {
   };
   const thumb = (item: IComment): void => {
     thumbComment('commentId', item.id).then((data) => {
-      publishMessage('/comment', '点赞了', 'cId', item.id).then(()=>{}).catch(()=>{});
       dispatch(changeUserDetailAction());
     });
   };
@@ -77,12 +75,8 @@ const Comment: FC<IProps> = memo((props): ReactElement => {
             return (
               <li key={item.id}>
                 <div className="img-container" onClick={(e) => userRouter(item.user)}>
-                  {
-                    item.user.avatarUrl&&<img src={item.user.avatarUrl} alt="" />
-                  }
-                  {
-                    !item.user.avatarUrl&&<img src={placeholder} alt=""/>
-                  }
+                  {item.user.avatarUrl && <img src={item.user.avatarUrl} alt="" />}
+                  {!item.user.avatarUrl && <img src={placeholder} alt="" />}
                 </div>
                 <div className="msg">
                   <div className="user-name">{item.user.userName}:</div>
@@ -107,12 +101,8 @@ const Comment: FC<IProps> = memo((props): ReactElement => {
                           <li key={item.id}>
                             <div className="reply-msg">
                               <div className="re-avatar" onClick={(e) => userRouter(item.user)}>
-                                {
-                                  item.user.avatarUrl&&<img src={item.user.avatarUrl} alt="" />
-                                }
-                                {
-                                  !item.user.avatarUrl&&<img src={placeholder} alt=""/>
-                                }
+                                {item.user.avatarUrl && <img src={item.user.avatarUrl} alt="" />}
+                                {!item.user.avatarUrl && <img src={placeholder} alt="" />}
                               </div>
                             </div>
                             <div>
